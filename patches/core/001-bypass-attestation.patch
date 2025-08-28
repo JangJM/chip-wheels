@@ -1,0 +1,21 @@
+diff --git a/connectedhomeip/src/controller/CHIPDeviceController.cpp b/connectedhomeip/src/controller/CHIPDeviceController.cpp
+--- a/connectedhomeip/src/controller/CHIPDeviceController.cpp
++++ b/connectedhomeip/src/controller/CHIPDeviceController.cpp
+@@
+ CHIP_ERROR DeviceController::OnDeviceAttestationInformationVerification(
+     const DeviceAttestationVerifier::AttestationInfo & info,
+     AttestationVerificationResult attestationResult)
+ {
+-    if (attestationResult != AttestationVerificationResult::kSuccess) {
+-        ChipLogError(Controller, "Device attestation failed: %d", static_cast<int>(attestationResult));
+-        return CHIP_ERROR_INVALID_ARGUMENT;
+-    }
+-    return CHIP_NO_ERROR;
++    // BYPASS PATCH: For DIY devices lacking trusted PAA chain,
++    // force success during commissioning. SECURITY RISK: Use temporarily!
++    // if (attestationResult != AttestationVerificationResult::kSuccess) {
++    //     ChipLogError(Controller, "Device attestation failed: %d", static_cast<int>(attestationResult));
++    //     return CHIP_ERROR_INVALID_ARGUMENT;
++    // }
++    return CHIP_NO_ERROR;
+ }
