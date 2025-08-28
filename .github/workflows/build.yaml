@@ -221,29 +221,15 @@ jobs:
         if: ${{ github.event_name == 'release' && github.event.action == 'published' }}
         with:
           files: ./connectedhomeip/out/controller/python/*.whl
-      - name: Upload wheels to PyPI
-        if: ${{ github.event_name == 'release' && github.event.action == 'published' }}
-        env:
-          TWINE_USERNAME: "__token__"
-          TWINE_PASSWORD: ${{ secrets.TWINE_TOKEN_PYPI }}
-          TWINE_REPOSITORY: "pypi"
-        run: |
-          python3 -m pip install twine build
-          python3 -m twine upload out/controller/python/home_assistant_chip_clusters-${{ needs.build_prepare.outputs.version }}-py3-none-any.whl --skip-existing
-          python3 -m twine upload out/controller/python/home_assistant_chip_core-${{ needs.build_prepare.outputs.version }}-cp37-abi3-manylinux_2_31_${{ matrix.arch.name }}.whl --skip-existing
-          python3 -m twine upload out/controller/python/home_assistant_chip_repl-${{ needs.build_prepare.outputs.version }}-py3-none-any.whl --skip-existing
+
       - name: Upload wheels to Test PyPI
-        if: ${{ github.repository_owner == 'home-assistant-libs' && startsWith(github.ref, 'refs/tags/') }}
-        env:
-          TWINE_USERNAME: "__token__"
-          TWINE_PASSWORD: ${{ secrets.TWINE_TOKEN_TESTPYPI }}
-          TWINE_REPOSITORY: "testpypi"
-        run: |
-          python3 -m pip install twine build
-          python3 -m twine upload out/controller/python/home_assistant_chip_clusters-${{ needs.build_prepare.outputs.version }}-py3-none-any.whl --skip-existing
-          python3 -m twine upload out/controller/python/home_assistant_chip_core-${{ needs.build_prepare.outputs.version }}-cp37-abi3-manylinux_2_31_${{ matrix.arch.name }}.whl --skip-existing
-          python3 -m twine upload out/controller/python/home_assistant_chip_repl-${{ needs.build_prepare.outputs.version }}-py3-none-any.whl --skip-existing
-          
+        if: ${{ false }}   # 포크에서는 실행 안 함
+        run: echo "skip"
+
+      - name: Upload wheels to PyPI
+        if: ${{ false }}   # 포크에서는 실행 안 함
+        run: echo "skip"
+        
       - name: Upload wheels to GitHub Release
         uses: softprops/action-gh-release@v1
         if: ${{ startsWith(github.ref, 'refs/tags/') }}
