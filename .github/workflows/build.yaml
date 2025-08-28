@@ -121,7 +121,7 @@ jobs:
           fi
 
           echo "Using container with tag: ${tag}"
-          echo "container_image=ghcr.io/${{ github.repository }}/chip-wheels-builder:${tag}" >> $GITHUB_OUTPUT
+          echo "container_image=ghcr.io/home-assistant-libs/chip-wheels/chip-wheels-builder:main" >> $GITHUB_OUTPUT
           echo "build_needed=${build_needed}" >> $GITHUB_ENV
 
       - name: Log in to GitHub Container Registry
