@@ -243,6 +243,14 @@ jobs:
           python3 -m twine upload out/controller/python/home_assistant_chip_clusters-${{ needs.build_prepare.outputs.version }}-py3-none-any.whl --skip-existing
           python3 -m twine upload out/controller/python/home_assistant_chip_core-${{ needs.build_prepare.outputs.version }}-cp37-abi3-manylinux_2_31_${{ matrix.arch.name }}.whl --skip-existing
           python3 -m twine upload out/controller/python/home_assistant_chip_repl-${{ needs.build_prepare.outputs.version }}-py3-none-any.whl --skip-existing
+          
+      - name: Upload wheels to GitHub Release
+        uses: softprops/action-gh-release@v1
+        if: ${{ startsWith(github.ref, 'refs/tags/') }}
+        with:
+          files: |
+            out/controller/python/*.whl
+
 
   build_macos_python_lib:
     name: Build Python wheels for macOS (${{ matrix.arch.name }})
